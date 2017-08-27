@@ -1,0 +1,125 @@
+C51 COMPILER V9.55   RTC                                                                   06/10/2016 12:00:26 PAGE 1   
+
+
+C51 COMPILER V9.55, COMPILATION OF MODULE RTC
+OBJECT MODULE PLACED IN .\Objects\RTC.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE RTC.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\RTC.l
+                    -st) TABS(2) OBJECT(.\Objects\RTC.obj)
+
+line level    source
+
+   1          /* 
+   2           * File:   demo.c
+   3           * Author: shubh
+   4           *
+   5           * Created on March 25, 2016, 1:09 PM
+   6           */
+   7          #include<reg52.h>
+   8          #include<lcd.h>
+   9          //#include<delay.h>
+  10          #include <ds1307.h>
+  11          //#include <i2c.h>
+  12          
+  13          
+  14          #define SEC   0x00
+  15          #define MIN   0x01
+  16          #define HOUR  0x02
+  17          #define DOW  0x03
+  18          #define DATE  0x04
+  19          #define MONTH 0x05
+  20          #define YEAR  0x06
+  21          
+  22          #define mon   0x01
+  23          #define tue  0x02
+  24          #define wed  0x03
+  25          #define thu  0x04
+  26          #define fri 0x05
+  27          #define sat  0x06
+  28          #define sun   0x07
+  29          unsigned char date,month,year,hour,min,sec,hour1,dow;
+  30          void main (void)
+  31          {
+  32   1          lcd_init(4);
+  33   1          lcd_msg_display("ELECTRO-PASSION");
+  34   1      /* THe below two lines are used to load current time in rtc ds1307. 
+  35   1        Please comment out this two lines while just reading from rtc. 
+  36   1        otherwise you will get wrong value after after each reset.*/
+  37   1          DS1307_settime(0x12,0x59,0x00,pm,12);
+  38   1          DS1307_setdate(0x15,0x04,0x16,fri);
+  39   1          curser_pos(2,1);
+  40   1          lcd_msg_display("Real Time Clock");
+  41   1          delay_ms(1000);
+  42   1          lcd_clear();
+  43   1              lcd_msg_display("Time:");
+  44   1        curser_pos(2,1);
+  45   1        lcd_msg_display("Date:");
+  46   1         while(1)
+  47   1        {
+  48   2          /* Get Date & Time */
+  49   2          sec   = DS1307_get(SEC);
+  50   2          min   = DS1307_get(MIN);
+  51   2          hour  = DS1307_get(HOUR);
+  52   2                      dow  = DS1307_get(DOW);
+  53   2          date  = DS1307_get(DATE);
+  54   2          month = DS1307_get(MONTH);
+C51 COMPILER V9.55   RTC                                                                   06/10/2016 12:00:26 PAGE 2   
+
+  55   2          year  = DS1307_get(YEAR);
+  56   2          // Show Time in format hr:min:sec
+  57   2      
+  58   2                      curser_pos(1,6);      // Set LCD cursor at (1,6)
+  59   2                      hour1=hour & 0x1F;
+  60   2                      lcd_BCD_display(hour1);     // Show min on LCD
+  61   2          lcddata(':');
+  62   2          lcd_BCD_display(min);     // Show hour on LCD
+  63   2          lcddata(':');
+  64   2          lcd_BCD_display(sec);     // Show sec on LCD
+  65   2                      if(ampm_check(hour)==1)
+  66   2                          lcd_msg_display("PM");
+  67   2                      else
+  68   2                          if(ampm_check(hour)==0)
+  69   2                              lcd_msg_display("AM");
+  70   2          // Show Date in format dd/mm/yr
+  71   2          curser_pos(2,6);      // Set LCD cursor at (2,6)
+  72   2          lcd_BCD_display(date);    // Show date on LCD
+  73   2          lcddata('/');
+  74   2          lcd_BCD_display(month);     // Show year on LCD
+  75   2          lcddata('/');
+  76   2          lcd_BCD_display(year);  // Show month on LCD
+  77   2                      switch(dow){
+  78   3                          case(mon):
+  79   3                          {lcd_msg_display("MON");break;}
+  80   3                          case(tue):
+  81   3                          {lcd_msg_display("TUE");break;}
+  82   3                          case(wed):
+  83   3                          {lcd_msg_display("WED");break;}
+  84   3                          case(thu):
+  85   3                          {lcd_msg_display("THU");break;}
+  86   3                          case(fri):
+  87   3                          {lcd_msg_display("FRI");break;}
+  88   3                          case(sat):
+  89   3                          {lcd_msg_display("SAT");break;}
+  90   3                          case(sun):
+  91   3                          {lcd_msg_display("SUN");break;}
+  92   3                          default:
+  93   3                          {lcd_BCD_display(dow);break;}
+  94   3                      }
+  95   2                      delay_ms(1000);
+  96   2      
+  97   2          }
+  98   1      }
+*** WARNING C291 IN LINE 27 OF RTC.c: not every exit path returns a value
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =   1178    ----
+   CONSTANT SIZE    =     78    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     10      23
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =      3       1
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  1 WARNING(S),  0 ERROR(S)

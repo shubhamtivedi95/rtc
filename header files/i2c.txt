@@ -1,0 +1,14 @@
+void I2C_start()
+	This function is used to send start signal on i2c bus.
+
+
+void I2C_stop()		
+	This function is used to send stop signal on i2c bus
+
+
+bit I2C_send(unsigned char send)	
+	This function is used to send data or address to i2c bus. This function returns the acknowledge signal.
+
+
+unsigned char I2C_read()
+	This function is used to receive data from i2c bus.

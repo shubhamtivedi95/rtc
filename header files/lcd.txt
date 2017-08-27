@@ -1,0 +1,61 @@
+check first declearation part of code and assign pins according to your connection.
+
+
+void delay_ms(unsigned int msec)
+	This function provides 1 miliseconds delay
+
+
+void lcddata(unsigned char chr)
+	This function is used to send 1 byte data to lcd.
+
+
+void lcdcmd(unsigned char chr)
+	This function is used to send commands to lcd.
+
+
+void lcd_Decimal_display(unsigned int value)
+	This function is used to display any decimal variable on display.
+
+
+void lcd_BCD_display(unsigned int value)
+	This function is used to display any BCD variable on display.
+	This function is mostly used in ds1307 rtc.
+
+
+void lcd_init(unsigned char bits)
+	This function is used to initalise display. 
+	User will have to pass a value to initialise lcd in either 4 bit mode or 8 bit mode.
+	for initialise in 4 bit user should pass 4 in this function and for 8 bit mode 8.
+	This function clears the display, switch on the display, set curser at beginning of first row.
+	Ex: lcd_init(4); 
+
+void lcd_msg_display(unsigned char text[])
+	This function is used to display fixed message string on lcd.
+	To display the message on desire possition,
+	please set the curser on this position by using curser_pos() function.
+	Ex: 	curser_pos(2,1);
+		lcd_msg_display("ELECTRO-PASSION");
+	This will display the message ELECTRO-PASSION on first coloum of second row.
+
+
+void lcd_clear()	
+	This function is used to clear lcd screen and set the curser at home.
+
+
+void curser_pos(unsigned char row,unsigned char col)
+	This function is used to set desire curser possition. 
+	user will have to pass row and coloum value to this function.
+
+
+void lcd_shift_left(unsigned char time,unsigned int duration)
+	This function is used to shift entire display to left.
+	user should define how much time it will shift to and the durtion between two shift.
+	Ex: lcd_shift_left(5,500);
+	This will shift the display to the left 5 time and each shift occurs after 500 miliseconds.
+
+
+void lcd_shift_right(unsigned char time,unsigned int duration)
+	This function is used to shift entire display to right.
+	user should define how much time it will shift to and the durtion between two shift.
+	Ex: lcd_shift_right(5,500);
+	This will shift the display to the right 5 time and each shift occurs after 500 miliseconds.

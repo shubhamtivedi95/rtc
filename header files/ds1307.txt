@@ -1,0 +1,24 @@
+char ampm_check(unsigned char value)
+	This function is for check AM /PM time format.
+	user should pass current hours value to this function.
+	If current hours is in PM, then this function returns 1.
+	If current hours is in AM, then this function returns 0.
+	If rtc is set in 24 hours mode then this function returns 2.
+
+
+void DS1307_settime(unsigned char hh, unsigned char min, unsigned char ss, bit status,unsigned char mode)
+	This function is used to set time in RTC.
+	user will have to pass hours, minutes, seconds, am/pm,mode(either 12 or 24).
+	if 24 hours mode is selected then am/pm will be ignore ,
+	but then also user should write something either am or pm.
+
+
+void DS1307_setdate(unsigned char dd, unsigned char mm, unsigned char yy,unsigned char day)
+	This function is used to set date in RTC.
+	User will have to pass day,month,year (last two digits) and day of week.
+	its fully depends on user from where to begin the week. eithr from sunday or monday.
+
+unsigned char DS1307_get(unsigned char addr)
+	This function is used to get current data from RTC.
+	User will have to pass address of register to obtain the data.
+	for example:- 00h for read seconds
